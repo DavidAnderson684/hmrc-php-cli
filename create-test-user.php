@@ -22,10 +22,12 @@ $credentials = [
 	'serverToken' => $_ENV['SERVER_TOKEN'],
 ];
 
-$vat = new HmrcVat('', '', '', 'test', null, $credentials);
+$vat = new HmrcVat('', '', '', $api_mode, null, $credentials);
 
 $create_test_user = $vat->createTestUser();
 
 if (Hmrc::RETURN_SUCCESS !== $create_test_user) report_api_error($vat);
 
 echo "Success.\n";
+
+print_r($vat->responseBody);

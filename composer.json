@@ -1,6 +1,7 @@
 { "require":
 	{
 		"ecohmrc/mtd": "^1.0.0",
-		"vlucas/phpdotenv": "^2.5"
+		"vlucas/phpdotenv": "^2.5",
+		"phpunit/phpunit": "^7.3"
 	}
 }

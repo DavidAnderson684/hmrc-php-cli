@@ -4,6 +4,7 @@
 
 // Shared options
 $debug = false;
+$api_mode = 'test';
 
 /**
  * Return command line options common to all CLI scripts
@@ -11,7 +12,7 @@ $debug = false;
  * @return String
  */
 function cli_common_options() {
-	return '[--debug]';
+	return '[--debug] [--live|--test]';
 }
 
 if (!file_exists(__DIR__.'/vendor/autoload.php')) {
@@ -20,6 +21,19 @@ if (!file_exists(__DIR__.'/vendor/autoload.php')) {
 
 require __DIR__.'/vendor/autoload.php';
 
+// Parsing of shared options
+if ($argc > 1) {
+	foreach ($argv as $key => $value) {
+		if ($key == 0):
+		elseif ('-?' == $value || '--help' == $value): { print_usage(); exit; }
+		elseif ('--debug' == $value): $debug = true;
+		elseif ('--live' == $value): $api_mode = 'live';
+		elseif ('--test' == $value): $api_mode = 'test';
+		endif;
+    }
+}
+
+// Loading from environment
 if (file_exists(__DIR__.'/.env')) {
 	$dotenv = new \Dotenv\Dotenv(__DIR__);
 	$dotenv->load();
@@ -31,15 +45,7 @@ foreach (['CLIENT_ID', 'CLIENT_SECRET', 'SERVER_TOKEN'] as $required_env_var) {
 	}
 }
 
-// Parsing of shared options
-if ($argc > 1) {
-	foreach ($argv as $key => $value) {
-		if ($key == 0):
-		elseif ('-?' == $value || '--help' == $value): { print_usage(); exit; }
-		elseif ('--debug' == $value): $debug = true;
-		endif;
-    }
-}
+
 
 /**
  * Handle an API error response, and optionally die
