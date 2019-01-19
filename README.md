@@ -23,3 +23,5 @@ This is not an official HMRC project, and is currently experimental. Code contri
 1. Install dependencies via running `composer install`
 
 1. Follow the installation and testing instructions of https://github.com/ecoofficekbo/hmrcmtd up to the point immediately before creating a test user. The .env file should go in the base directory of hmrc-php-cli, *not* vendor/ecohmrc/mtd
+
+1. To create a test user, run the script (from this project) create-test-user.php . e.g. `php create-test-user.php`
